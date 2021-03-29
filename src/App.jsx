@@ -1,4 +1,6 @@
 import Login from "./components/Login";
+import Home from "./components/Home";
+
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 function App() {
@@ -6,6 +8,7 @@ function App() {
     <Router>
       <Switch>
         <Route exact path="/" component={Login} />
+        <Route exact path="/home" component={Home} />
       </Switch>
     </Router>
   );

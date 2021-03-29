@@ -118,7 +118,7 @@ const FormularioLogin = () => {
                 </FormControl>
 
                 <div style={{ height: 20 }} />
-                <Button color="primary" variant="contained">
+                <Button href='/home' color="primary" variant="contained">
                   Iniciar Sesion
                 </Button>
               </div>
