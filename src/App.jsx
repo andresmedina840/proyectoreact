@@ -5,7 +5,7 @@ function App() {
   return (
     <Router>
       <Switch>
-        <Route exact path="/i2aut" component={Login} />
+        <Route exact path="/" component={Login} />
       </Switch>
     </Router>
   );
