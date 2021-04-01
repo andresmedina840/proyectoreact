@@ -1,7 +1,7 @@
 import React from "react";
-import AppBar from './appbar/AppBar'
+import AppBar from './appbar/AppBar';
 
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router} from "react-router-dom";
 
 const Home = () => {
   return (

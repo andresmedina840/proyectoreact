@@ -2,18 +2,19 @@ import {
   Button,
   FormControl,
   Grid,
-  IconButton,
   InputAdornment,
   InputLabel,
   OutlinedInput,
   TextField,
 } from "@material-ui/core";
-import { AccountCircle, Visibility, VisibilityOff } from "@material-ui/icons";
+import { AccountCircle } from "@material-ui/icons";
 import { useState } from "react";
 //import useStyles from "./configUseStyles";
 import "../assets/css/login.css";
 import Paper from '@material-ui/core/Paper';
 import { makeStyles } from '@material-ui/core/styles';
+import { useDispatch } from "react-redux";
+import { loginAction } from "./redux/actions/mainActions";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -26,32 +27,40 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const FormularioLogin = () => {
-  //const classes = useStyles();
+const FormularioLogin = ({history}) => {
+  
+  const dispatch = useDispatch();
+
   const classes = useStyles();
   const [values, setValues] = useState({
-    password: "",
-    weight: "",
-    weightRange: "",
-    showPassword: false,
+    usuario: "",
+    password: ""
   });
 
-  const handleChange = (prop) => (event) => {
-    setValues({ ...values, [prop]: event.target.value });
+  const handleChange =  e => {
+    setValues({ ...values, [e.target.name]: e.target.value });
   };
 
-  const handleClickShowPassword = () => {
-    setValues({ ...values, showPassword: !values.showPassword });
-  };
 
-  const handleMouseDownPassword = (event) => {
-    event.preventDefault();
-  };
+
+  //cuando se autentica el usuario
+  const LoginSuccess = e => {
+    e.preventDefault();
+
+
+    // validacion autenticacion 
+      dispatch(loginAction(values.usuario))
+    // no existen errores
+
+    // ingreso a la aplicación exitosa
+    history.push('/home')
+  }
+
 
   
   return (
     <div className="App">
-      <form>
+      <form onSubmit={LoginSuccess}>
         <Grid container style={{ minHeight: "40vh" }}>
           <Grid container justify="center">
             <Grid
@@ -75,8 +84,12 @@ const FormularioLogin = () => {
                 }}
               >
                 <TextField
+                  required
+                  name="usuario"
                   id="usuario"
                   label="Usuario"
+                  value={values.usuario}
+                  onChange={ e => handleChange(e) }
                   margin="normal"
                   variant="outlined"
                   InputProps={{
@@ -93,32 +106,18 @@ const FormularioLogin = () => {
                     Password
                   </InputLabel>
                   <OutlinedInput
+                    required
+                    name="password"
                     id="outlined-adornment-password"
-                    type={values.showPassword ? "text" : "password"}
+                    type="password"
                     value={values.password}
-                    onChange={handleChange("password")}
-                    endAdornment={
-                      <InputAdornment position="end">
-                        <IconButton
-                          aria-label="toggle password visibility"
-                          onClick={handleClickShowPassword}
-                          onMouseDown={handleMouseDownPassword}
-                          edge="end"
-                        >
-                          {values.showPassword ? (
-                            <Visibility />
-                          ) : (
-                            <VisibilityOff />
-                          )}
-                        </IconButton>
-                      </InputAdornment>
-                    }
+                    onChange={ e => handleChange(e) }                  
                     labelWidth={100}
                   />
                 </FormControl>
 
                 <div style={{ height: 20 }} />
-                <Button href='/home' color="primary" variant="contained">
+                <Button onClick={LoginSuccess} color="primary" variant="contained">
                   Iniciar Sesion
                 </Button>
               </div>
