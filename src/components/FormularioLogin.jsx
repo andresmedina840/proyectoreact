@@ -15,6 +15,7 @@ import Paper from '@material-ui/core/Paper';
 import { makeStyles } from '@material-ui/core/styles';
 import { useDispatch } from "react-redux";
 import { loginAction } from "./redux/actions/mainActions";
+import axios from 'axios';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -27,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const FormularioLogin = ({history}) => {
+const FormularioLogin = () => {
   
   const dispatch = useDispatch();
 
@@ -53,7 +54,20 @@ const FormularioLogin = ({history}) => {
     // no existen errores
 
     // ingreso a la aplicación exitosa
-    history.push('/home')
+    //history.push('/home')
+    const data = {
+         usuario: values.usuario,
+         password: values.password
+       }
+       axios.post('http://localhost:8000/login', data).then(
+         res => {
+           console.log(res)
+         }
+       ).catch (
+         err => {
+           console.log(err)
+         }
+       )    
   }
 
 
@@ -86,7 +100,7 @@ const FormularioLogin = ({history}) => {
                 <TextField
                   required
                   name="usuario"
-                  id="usuario"
+                  
                   label="Usuario"
                   value={values.usuario}
                   onChange={ e => handleChange(e) }
@@ -108,7 +122,7 @@ const FormularioLogin = ({history}) => {
                   <OutlinedInput
                     required
                     name="password"
-                    id="outlined-adornment-password"
+                    
                     type="password"
                     value={values.password}
                     onChange={ e => handleChange(e) }                  
